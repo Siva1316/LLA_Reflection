@@ -1,0 +1,20 @@
+version: v1
+name: filterpolicysector
+type: policy
+layer: user
+description: "data policy to filter company status"
+owner:
+policy:
+  data:
+    type: filter
+    priority: 75
+    dataset_id: icebase.company_intelligence.company_data
+    selector:
+      user:
+        match: any
+        tags:
+          - "roles:id:restricted-access"
+    filters:
+      - column: sector
+        operator: equals
+        value: "Healthcare"

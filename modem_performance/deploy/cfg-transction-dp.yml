@@ -28,4 +28,4 @@ v1beta:
 
     outputs:
       - refType: dataos
-        ref: ataos://lakehouse:siva/modem_performance_data
+        ref: dataos://lakehouse:siva/modem_performance_data
