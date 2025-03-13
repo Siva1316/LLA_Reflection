@@ -2,18 +2,17 @@ name: modem-performance-data-qcheck
 version: v1
 type: workflow
 tags:
-  - Tier.Gold
-  - Domain.Network
-description: The role involves conducting thorough and detailed quality analysis, including data assertion, of extensive raw transaction data using the advanced features of the DataOS platform.
+  - workflow
+  - soda-checks
+description: The role involves conducting thorough and detailed quality analysis, including data assertion, of extensive raw modem data using the advanced features of the DataOS platform.
 workspace: public
 workflow:
-  schedule:
-    cron: '*/5 * * * *'
-    concurrencyPolicy: Forbid
+  #schedule:
+  #  cron: '*/5 * * * *'
+  #  concurrencyPolicy: Forbid
   dag:
-    - name: transaction-quality
-      description: The role involves conducting thorough and detailed quality analysis, including data assertion, of extensive raw transaction data using the advanced features of the DataOS platform.
-      title: transaction Quality Assertion 
+    - name: modem-performance-data-quality
+      description: The role involves conducting thorough and detailed quality analysis, including data assertion, of extensive raw modem data using the advanced features of the DataOS platform.
       spec:
         stack:  soda+python:1.0 
         logLevel: INFO
@@ -27,10 +26,10 @@ workflow:
             memory: 250Mi
         stackSpec:
           inputs:
-            - dataset: dataos://lakehouse:siva/modem_performance_data?acl=rw
+            - dataset: dataos://lakehouse:siva/modem_performance_data
               options:
                 engine: minerva
-                clusterName: minervac
+                clusterName: miniature
               checks:
                 - duplicate_percent(modem_id) < 0.10%:
                     attributes:
@@ -57,4 +56,4 @@ workflow:
                       category: Freshness
               profile:
                 columns:
-                - '*'
+                - '*'           

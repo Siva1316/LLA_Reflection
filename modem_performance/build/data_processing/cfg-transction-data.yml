@@ -1,45 +1,59 @@
----
+# Data Ingestion
 version: v1
 name: modem-performance-data-trng-env
 type: workflow
 tags:
-  - Connect
-  - City
-description: The job ingests transaction data from s3 to lakehouse
+  - crm
+  - tainingenv
+  - modem performance data
+description: Ingesting data in lakehouse
 workflow:
-  title: transaction data 
+  # schedule:
+  #   cron: '*/2 * * * *'
+  #   endOn: '2025-01-21T22:00:00Z'
+  #   concurrencyPolicy: Forbid
   dag:
-    - name: transaction-data
-      title: transaction Dimension Ingester
-      description: The job ingests transaction data from s3 to lakehouse
+    - name: dg-modem-performance-data
+      # title: flatten Data Ingester
+      description: The job ingests modem performance data from S3 into icebase zone
       spec:
         tags:
-          - Connect
-          - City
-          - Training env
+          - crm
         stack: flare:6.0
         compute: runnable-default
-        flare:
+        stackSpec:
+          driver:
+            coreLimit: 2000m
+            cores: 2
+            memory: 3000m
+          executor:
+            coreLimit: 3000m
+            cores: 2
+            instances: 2
+            memory: 4000m
           job:
             explain: true
             inputs:
               - name: modem_performance_data
-                dataset: dataos://s3datahub:lla/modems_performance_data?acl=rw
+                dataset: dataos://modems3:none/modem_performance.csv?acl=rw
                 format: csv
                 options:
-                  headers: true                
-
+                  inferSchema: true
             logLevel: INFO
             outputs:
-              - name: finalDf
+              - name: output
                 dataset: dataos://lakehouse:siva/modem_performance_data?acl=rw
                 format: Iceberg
                 options:
                   saveMode: overwrite
+                  iceberg:
+                    properties:
+                      write.format.default: parquet
+                      write.metadata.compression-codec: gzip
             steps:
               - sequence:
-                  - name: finalDf
-                    sql: 
+                  - name: output
+                    sql: >
                       SELECT 
                           CAST(to_timestamp(timestamp, 'M/d/yyyy H:mm') AS TIMESTAMP) as timestamp,
                           modem_id,
@@ -52,8 +66,7 @@ workflow:
                           cast(Signal_Strength as int) as signal_strength,
                           Error_Code as error_code
                       from modem_performance_data
-                        
                     functions:
                       - name: cleanse_column_names
                       - name: change_column_case
-                        case: lower 
+                        case: lower
