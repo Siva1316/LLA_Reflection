@@ -1,0 +1,14 @@
+name: modem-performance-data-bundle
+version: v1beta
+type: bundle
+tags:
+  - Tier.Gold
+  - Domain.Research
+description: The purpose of the bundle is to deploy the company's financial info data product resources, making them available for use.
+layer: "user"
+bundle:
+  resources:
+    - id: transaction-quality
+      file: LLA\modem_performance\build\quality\config-transction-qcheck.yml
+      workspace: public
+

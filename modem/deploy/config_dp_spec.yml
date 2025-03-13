@@ -1,0 +1,41 @@
+name: creditcard-analysis-dp-siva
+version: v1beta
+entity: product
+type: data
+tags:
+  - DPUsecase.lla training env
+description: credit card analysis.
+
+v1beta:
+  data:
+    meta:
+      title: credit card insights dp
+      sourceCodeUrl: https://github.com/Siva1316/Data_Os_Big_Query
+ 
+    collaborators:
+      - name: acies05
+        description: owner
+    
+    resource:
+      refType: dataos
+      ref: bundle:v1beta:credit-card-insights-bundle-siva
+
+    inputs:
+      - refType: dataos
+        ref: dataos://lakehouse:siva/credit_data_cc
+
+      - refType: dataos
+        ref: dataos://lakehouse:siva/costomer_data_cc
+
+    outputs:
+      - refType: dataos
+        ref: dataos://lakehouse:siva/customer_credit_Insights
+
+    ports:
+      lens:
+        ref: lens:v1alpha:customer-credit-lens-siva:public
+        refType: dataos
+
+
+
+      

@@ -1,0 +1,59 @@
+---
+version: v1
+name: modem-performance-data-trng-env
+type: workflow
+tags:
+  - Connect
+  - City
+description: The job ingests transaction data from s3 to lakehouse
+workflow:
+  title: transaction data 
+  dag:
+    - name: transaction-data
+      title: transaction Dimension Ingester
+      description: The job ingests transaction data from s3 to lakehouse
+      spec:
+        tags:
+          - Connect
+          - City
+          - Training env
+        stack: flare:6.0
+        compute: runnable-default
+        flare:
+          job:
+            explain: true
+            inputs:
+              - name: modem_performance_data
+                dataset: dataos://s3datahub:lla/modems_performance_data?acl=rw
+                format: csv
+                options:
+                  headers: true                
+
+            logLevel: INFO
+            outputs:
+              - name: finalDf
+                dataset: dataos://lakehouse:siva/modem_performance_data?acl=rw
+                format: Iceberg
+                options:
+                  saveMode: overwrite
+            steps:
+              - sequence:
+                  - name: finalDf
+                    sql: 
+                      SELECT 
+                          CAST(to_timestamp(timestamp, 'M/d/yyyy H:mm') AS TIMESTAMP) as timestamp,
+                          modem_id,
+                          cast(CPU_Utilization as int) as cpu_utilization,
+                          cast(RAM_Utilization as int) as ram_utilization,
+                          cast(Flash_Write_Cycles as int) as flash_write_cycles,
+                          cast(Device_Internal_Temp as int) as  device_internal_temp,
+                          cast(Voltage_Adapter as double) as voltage_adapter,
+                          cast(Unexpected_Restarts as int) as unexpected_restarts,
+                          cast(Signal_Strength as int) as signal_strength,
+                          Error_Code as error_code
+                      from modem_performance_data
+                        
+                    functions:
+                      - name: cleanse_column_names
+                      - name: change_column_case
+                        case: lower 

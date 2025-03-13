@@ -1,0 +1,43 @@
+name: modem-performance-data-dp
+version: v1beta
+entity: product
+type: data
+tags:
+  - DPDomain.Training
+  - DPUsecase.lla
+description: credit card analysis.
+
+v1beta:
+  data:
+    meta:
+      title: credit card insights dp
+      sourceCodeUrl: https://github.com/Siva1316/Data_Os_Big_Query
+ 
+    collaborators:
+      - name: acies05
+        description: owner
+    
+    resource:
+      refType: dataos
+      ref: bundle:v1beta:credit-card-insights-bundle-siva
+
+    inputs:
+      - refType: dataos
+        ref: dataos://lakehouse:siva/credit_data_cc
+
+    outputs:
+      - refType: dataos
+        ref: dataos://lakehouse:siva/customer_credit_Insights
+
+      
+    inputs:
+      - description: The input table contains raw data sourced from various systems, including modem and IP inventory, network configuration databases, and device management platforms. It includes attributes like device IDs, IP addresses, modem types, firmware versions, and status history.
+        purpose: source
+        refType: dataos
+        ref: dataset:postgres:public:modem_data 
+    outputs:
+      - description: The output table provides a cleansed, structured, and enriched dataset for downstream applications. It includes standardized IP and modem metadata, unique device identifiers, historical status, and integration-ready records for analytics, monitoring, and predictive modeling.
+        refType: dataos
+        ref: dataset:lakehouse:lla:modem_data
+
+            
