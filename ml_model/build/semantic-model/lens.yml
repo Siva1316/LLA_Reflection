@@ -1,18 +1,18 @@
 # RESOURCE META SECTION
-name: modem-predict-lens# Lens Resource name (mandatory)
+name:  modem-predict-lens # Lens Resource name (mandatory)
 version: v1alpha # Lens manifest version (mandatory)
 layer: user # DataOS Layer (optional)
 type: lens # Type of Resource (mandatory)
 tags: # Tags (optional)
   - lens
-  - modem predict
-description: This data model provides comprehensive insights for customer data related to credits. # Lens Resource description (optional)
+  - modem predict failure
+description: This data model provides modem failure related data. # Lens Resource description (optional)
 
 # LENS-SPECIFIC SECTION
 lens:
   compute: runnable-default # Compute Resource that Lens should utilize (mandatory)
   secrets: 
-    - name: sivagithub-r # Referred Instance Secret name (mandatory)
+    - name: strgithub-r # Referred Instance Secret name (mandatory)
       allKeys: true # All keys within the secret are required or not (optional)
 
 # Data Source configuration      
@@ -22,8 +22,8 @@ lens:
     catalog: lakehouse # Catalog name for the depot
     
   repo: # Lens model code repository configuration (mandatory)
-    url: https://github.com/Siva1316/Data_Os_Big_Query  # URL of repository containing the Lens model (mandatory)
-    lensBaseDir: Data_Os_Big_Query/Semantic_model/Model # Relative path of the Lens 'model' directory in repository (mandatory)
+    url: https://github.com/Siva1316/LLA_Reflection # URL of repository containing the Lens model (mandatory)
+    lensBaseDir: LLA_Reflection/tree/main/ml_model/build/semantic-model/model # Relative path of the Lens 'model' directory in repository (mandatory)
     syncFlags: # Additional flags used during synchronization (optional)
       - --ref=main # Repository Branch (optional)
 
@@ -64,4 +64,3 @@ lens:
   
   metric:
     logLevel: debug
-
