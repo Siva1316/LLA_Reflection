@@ -1,0 +1,34 @@
+views:
+  - name: modem_id_prediction
+    description: A predictive analytics model that forecasts potential modem failures based on key performance metrics like CPU utilization, temperature, voltage, and error patterns. It helps in proactive maintenance, reducing downtime, and improving customer experience.
+    public: true
+    meta:
+      title: Modem Information
+      tags:   
+        - DPDomain.Network  
+        - DPUsecase.Modem failure predictor 
+        - DPTier.Consumer Aligned  
+      metric:
+        expression: "*/60  * * * *"
+        timezone: "UTC"
+        window: "day"
+        # excludes: 
+        #   - share_price_data.mkt_close_value        
+    tables:
+      - join_path: performance_data
+        prefix: true
+        includes:
+          - timestamp
+          - unique_modems
+          - error_code
+
+      - join_path: modem_prediction
+        prefix: true
+        includes:
+          - failure_probability
+          - remaining_lifetime_years
+
+      - join_path: modem_data
+        prefix: true
+        includes:
+          - modem_id

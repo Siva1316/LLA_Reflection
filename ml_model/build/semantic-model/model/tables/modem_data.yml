@@ -8,6 +8,10 @@ tables:
       - name: performance_data
         relationship: one_to_one
         sql: "{TABLE.concat_colu}={performance_data.concat_colu}" 
+      
+      - name: modem_prediction
+        relationship: many_to_one
+        sql: "{TABLE.modem_id}={modem_prediction.modem_id}"
 
     dimensions:
       - name: timestamp

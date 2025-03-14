@@ -1,0 +1,34 @@
+name: modem-prediction-dp-training-env
+version: v1beta
+entity: product
+type: data
+tags:
+  - DPDomain.Network
+  - DPUsecase.Modem Failure Predictor
+  - DPTier.Source Aligned
+description: A data product that monitors modem prediction by tracking resource utilization, hardware health, signal strength, and error occurrences over time.
+
+v1beta:
+  data:
+    meta:
+      title: Modem Prediction 360 dp
+      sourceCodeUrl: https://github.com/Siva1316/LLA_Reflection/tree/main/ml_model
+ 
+    collaborators:
+      - name: acies05
+        description: owner
+    
+    resource:
+      refType: dataos
+      ref: bundle:v1beta:modem-prediction-bundle-trng-env
+
+    inputs:
+      - refType: dataos
+        ref:  dataos://lakehouse:siva/modem_data
+
+      - refType: dataos
+        ref:  dataos://lakehouse:siva/modem_performance_data
+    ports:
+      lens:
+        ref: lens:v1alpha:modem-predict-lens:public
+        refType: dataos   

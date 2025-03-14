@@ -1,0 +1,12 @@
+name: modem-prediction-bundle-trng-env
+version: v1beta
+type: bundle
+tags:
+  - dataproduct
+description: This bundle resource is for the product affinity data product.
+layer: "user"
+bundle:
+  resources:
+    - id: modem-prediction
+      file: C:\Users\DELL\Desktop\DataOS\dataos-ctl-windows-amd64\windows-amd64\LLA_Reflection\ml_model\build\semantic-model\lens.yml
+      workspace: public
