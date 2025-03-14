@@ -30,13 +30,6 @@ tables:
         column: concat_column
         type: string
         description: Modem Identifier
-        meta:
-          secure:
-            func: redact
-            user_groups: 
-              includes: "*" 
-              excludes:
-                - reader 
 
     measures:
       - name: total_records
