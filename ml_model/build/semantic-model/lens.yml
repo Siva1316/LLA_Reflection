@@ -12,7 +12,7 @@ description: This data model provides modem failure related data. # Lens Resourc
 lens:
   compute: runnable-default # Compute Resource that Lens should utilize (mandatory)
   secrets: 
-    - name: strgithub-r # Referred Instance Secret name (mandatory)
+    - name: sivagithub-r # Referred Instance Secret name (mandatory)
       allKeys: true # All keys within the secret are required or not (optional)
 
 # Data Source configuration      
@@ -23,7 +23,7 @@ lens:
     
   repo: # Lens model code repository configuration (mandatory)
     url: https://github.com/Siva1316/LLA_Reflection # URL of repository containing the Lens model (mandatory)
-    lensBaseDir: LLA_Reflection/tree/main/ml_model/build/semantic-model/model # Relative path of the Lens 'model' directory in repository (mandatory)
+    lensBaseDir: LLA_Reflection/ml_model/build/semantic-model/model # Relative path of the Lens 'model' directory in repository (mandatory)
     syncFlags: # Additional flags used during synchronization (optional)
       - --ref=main # Repository Branch (optional)
 
